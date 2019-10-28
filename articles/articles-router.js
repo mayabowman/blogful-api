@@ -28,7 +28,7 @@ articlesRouter
           .location(`/articles/${article.id}`)
           .json(article)
       })
-      .catch(next)
+      .catch(err => console.log(err))
   })
 
   articlesRouter
