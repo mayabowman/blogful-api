@@ -2,7 +2,7 @@ const express = require('express')
 const ArticlesService = require('./articles-service')
 
 const articlesRouter = express.Router()
-const jsonParser = express.json
+const jsonParser = express.json()
 
 articlesRouter
   .route('/')
@@ -28,7 +28,7 @@ articlesRouter
           .location(`/articles/${article.id}`)
           .json(article)
       })
-      .catch(err => console.log(err))
+      .catch(next)
   })
 
   articlesRouter
