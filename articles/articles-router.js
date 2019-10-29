@@ -1,17 +1,25 @@
 const express = require('express')
+const xss = require('xss')
 const ArticlesService = require('./articles-service')
 
 const articlesRouter = express.Router()
 const jsonParser = express.json()
 
+const serializeArticle = article => ({
+  id: article.id,
+  style: article.style,
+  title: xss(article.title),
+  content: xss(article.content),
+  date_published: article.date_published
+})
+
 articlesRouter
   .route('/')
   .get((req, res, next) => {
-    ArticlesService.getAllArticles(
-      req.app.get('db')
-    )
+    const knexInstance = req.app.get('db')
+    ArticlesService.getAllArticles(knexInstance)
       .then(articles => {
-        res.json(articles)
+        res.json(articles.map(serializeArticle))
       })
       .catch(next)
   })
@@ -26,7 +34,7 @@ articlesRouter
         })
       }
     }
-    
+
     ArticlesService.insertArticle(
       req.app.get('db'),
       newArticle
@@ -35,7 +43,7 @@ articlesRouter
         res
           .status(201)
           .location(`/articles/${article.id}`)
-          .json(article)
+          .json(serializeArticle(article))
       })
       .catch(next)
   })
@@ -51,7 +59,7 @@ articlesRouter
               error: { message: `Article doesn't exist` }
             })
           }
-          res.json(article)
+          res.json(serializeArticle(article))
         })
         .catch(next)
     })
