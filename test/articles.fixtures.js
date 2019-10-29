@@ -28,7 +28,7 @@ function makeArticlesArray() {
       style: 'Story',
       content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum molestiae accusamus veniam consectetur tempora, corporis obcaecati ad nisi asperiores tenetur, autem magnam. Iste, architecto obcaecati tenetur quidem voluptatum ipsa quam?'
     },
-  ]
+  ];
 }
 
 function makeMaliciousArticle() {
@@ -52,5 +52,5 @@ function makeMaliciousArticle() {
 
 module.exports = {
   makeArticlesArray,
-  makeMaliciousArticle
+  makeMaliciousArticle,
 }
