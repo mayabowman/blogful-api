@@ -57,7 +57,7 @@ usersRouter
   .all((req, res, next) => {
     UsersService.getById(
       req.app.get('db'),
-      rq.params.user_id
+      req.params.user_id
     )
       .then(user => {
         if (!user) {
